@@ -1,0 +1,38 @@
+# Template file for 'chadwm'
+pkgname=chadwm
+version=0.1
+revision=1
+#
+makedepends="libXinerama-devel libXft-devel freetype-devel git"
+#
+short_desc="Dynamic window manager for X"
+maintainer="siduck <siduck@tutanota.com>"
+license="MIT"
+homepage="https://github.com/siduck/chadwm.git"
+#
+#distfiles="https://dl.suckless.org/dwm/dwm-${version}.tar.gz"
+#checksum=badaa028529b1fba1fd7f9a84f3b64f31190466c858011b53e2f7b70c6a3078d
+#
+# ---------------------------------------------------------------------------
+# https://github.com/alexxlabs/void-packages/blob/master/Manual.md#functions
+# ---------------------------------------------------------------------------
+#
+# if defined and distfiles is not set, use it to extract the required sources.
+# Current working directory for do_extract, post_extract: wrksrc
+do_extract() {
+    git clone https://github.com/siduck/chadwm --depth 1
+}
+
+do_build() {
+	[ -e ${FILESDIR}/config.h ] && cp ${FILESDIR}/config.h config.h
+	sed -i "/CFLAGS/s|\${CPPFLAGS}|& $CFLAGS|g" config.mk
+	sed -i "/LDFLAGS/s|\-s|$LDFLAGS|g" config.mk
+	make CC=$CC INCS="-I. -I${XBPS_CROSS_BASE}/usr/include/freetype2" LIBS="-lX11 -lXinerama -lXft -lfontconfig"
+}
+
+do_install() {
+	make PREFIX=/usr DESTDIR=$DESTDIR install
+	vinstall README 644 usr/share/doc/$pkgname
+	vinstall ${FILESDIR}/dwm.desktop 644 usr/share/xsessions
+	vlicense LICENSE
+}
