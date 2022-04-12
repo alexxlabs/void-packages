@@ -1,7 +1,7 @@
-# Template file for 'alexxlabs_wm'
+# Template file for 'alexxlabs_dwm'
 # inspired by: https://github.com/siduck/chadwm
 #
-pkgname=alexxlabs_wm
+pkgname=alexxlabs_dwm
 version=6.3
 revision=1
 #
@@ -15,15 +15,29 @@ homepage="https://github.com/siduck/chadwm.git"
 # The directory name where the package sources are extracted,
 # by default set to ${pkgname}-${version}. If the top level directory
 # of a package's distfile is different from the default, wrksrc must
-# be set to the top level directory name inside the archive.
-wrksrc="${pkgname}-main"
+# be set to the *top level directory name inside the archive*.
+wrksrc="dwm-${version}"
+#
+# Enable it to create the ${wrksrc} directory.
+# Required if a package contains multiple distfiles.
+create_wrksrc=yes
+#
 # A directory relative to ${wrksrc} that will be used when building the package.
-# build_wrksrc="chadwm"
+#build_wrksrc="build"
 #
-distfiles="https://dl.suckless.org/dwm/dwm-${version}.tar.gz https://dwm.suckless.org/patches/gaplessgrid/gaplessgrid.c"
-checksum=ff72e389a9c85424609d3c638bdf2776b61e8437dcd48ac22104d4b629779771
+distfiles="
+	https://dl.suckless.org/dwm/dwm-${version}.tar.gz
+	https://dwm.suckless.org/patches/gaplessgrid/gaplessgrid.c"
 #
-# Create a folder named patches in the packge directory (in the same directory where your template file is).
+#  A list of filenames that should not be extracted in the extract phase.
+# This must match the *basename* of any url defined in ${distfiles}.
+skip_extraction="gaplessgrid.c"
+#
+checksum="
+	badaa028529b1fba1fd7f9a84f3b64f31190466c858011b53e2f7b70c6a3078d
+	0d4aade6b87df8df1af07629143dc5b758af9cf5f93eb6bab68161c74af1ef44"
+#
+# Create a folder named patches in the package directory (in the same directory where your template file is).
 # Put your .patch file inside the folder. Now open your template file and include this line after the checksum line:
 #patch_args="-Np1"
 #
@@ -32,9 +46,13 @@ checksum=ff72e389a9c85424609d3c638bdf2776b61e8437dcd48ac22104d4b629779771
 # ---------------------------------------------------------------------------
 #
 # if defined and distfiles is not set, use it to extract the required sources.
-# Current working directory for do_extract, post_extract: wrksrc
+# Current working directory for do_extract: wrksrc
 #do_extract() {
 #
+#}
+# Current working directory for post_extract: wrksrc
+#post_extract() {
+#	# copy gaplessgrid.c to build_dir
 #}
 #
 do_build() {
@@ -43,6 +61,14 @@ do_build() {
 	sed -i "/LDFLAGS/s|\-s|$LDFLAGS|g" config.mk
 	make CC=$CC INCS="-I. -I${XBPS_CROSS_BASE}/usr/include/freetype2" LIBS="-lX11 -lXinerama -lXft -lfontconfig"
 }
+#
+# A list of entries defining directories and permissions to be created at install time.
+# Each entry should be space separated, and will itself contain spaces.
+# User and group and mode are required on every line, even if they are 755 root root.
+# By convention, there is only one entry of dir perms user group per line.
+#make_dirs="
+#	/dir01 0750 user group
+#	/dir02 0750 user group"
 #
 # FILESDIR Full path to the files package directory, i.e srcpkgs/foo/files.
 # 	The files directory can be used to store additional files to be installed as part of the source package.
@@ -54,3 +80,42 @@ do_install() {
 	vinstall ${FILESDIR}/dwm.desktop 644 usr/share/xsessions
 	vlicense LICENSE
 }
+# =================================================================================================
+# ======================================= Subpackages =============================================
+# =================================================================================================
+# To create additional subpackages the template must define a new function with this naming: <subpkgname>_package():
+# foo-devel is a subpkg
+# TODO: setup rofi, eww etc. as subpackages !!!
+#foo-devel_package() {
+#	short_desc+=" - development files"
+#	depends="${sourcepkg}>=${version}_${revision}"
+#	pkg_install() {
+#		vmove usr/include
+#		vmove "usr/lib/*.a"
+#		vmove "usr/lib/*.so"
+#		vmove usr/lib/pkgconfig
+#	}
+#}
+# All subpackages need an additional symlink to the main pkg, otherwise dependencies requiring those packages won't find its template Example:
+# /srcpkgs
+#  |- foo <- directory (main pkg)
+#  |  |- template
+#  |- foo-devel <- symlink to `foo`
+#
+# The main package should specify all required build dependencies to be able to build all subpackages
+# defined in the template.
+#
+# An important point of subpackages is that they are processed after the main package has run its install phase.
+# The pkg_install() function specified on them commonly is used to move files from the main package destdir
+# to the subpackage destdir.
+#
+# The helper functions vinstall, vmkdir, vcopy and vmove are just wrappers that simplify the process of creating,
+# copying and moving files/directories between the main package destdir ($DESTDIR)
+# to the subpackage destdir ($PKGDESTDIR).
+#
+# Subpackages are processed always in alphabetical order; To force a custom order,
+# the subpackages variable can be declared with the wanted order.
+#
+# A white space separated list of subpackages (matching foo_package()) to override the guessed list.
+# Only use this if a specific order of subpackages is required, otherwise the default would work in most cases.
+#subpackages=""
