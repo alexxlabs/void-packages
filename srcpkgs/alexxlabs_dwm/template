@@ -1,0 +1,56 @@
+# Template file for 'alexxlabs_wm'
+# inspired by: https://github.com/siduck/chadwm
+#
+pkgname=alexxlabs_wm
+version=6.3
+revision=1
+#
+makedepends="libXinerama-devel libXft-devel freetype-devel imlib2-devel"
+#
+short_desc="Dynamic window manager for X"
+maintainer="siduck <siduck@tutanota.com>"
+license="MIT"
+homepage="https://github.com/siduck/chadwm.git"
+#
+# The directory name where the package sources are extracted,
+# by default set to ${pkgname}-${version}. If the top level directory
+# of a package's distfile is different from the default, wrksrc must
+# be set to the top level directory name inside the archive.
+wrksrc="${pkgname}-main"
+# A directory relative to ${wrksrc} that will be used when building the package.
+# build_wrksrc="chadwm"
+#
+distfiles="https://dl.suckless.org/dwm/dwm-${version}.tar.gz https://dwm.suckless.org/patches/gaplessgrid/gaplessgrid.c"
+checksum=ff72e389a9c85424609d3c638bdf2776b61e8437dcd48ac22104d4b629779771
+#
+# Create a folder named patches in the packge directory (in the same directory where your template file is).
+# Put your .patch file inside the folder. Now open your template file and include this line after the checksum line:
+#patch_args="-Np1"
+#
+# ---------------------------------------------------------------------------
+# https://github.com/alexxlabs/void-packages/blob/master/Manual.md#functions
+# ---------------------------------------------------------------------------
+#
+# if defined and distfiles is not set, use it to extract the required sources.
+# Current working directory for do_extract, post_extract: wrksrc
+#do_extract() {
+#
+#}
+#
+do_build() {
+	[ -e ${FILESDIR}/config.h ] && cp ${FILESDIR}/config.h config.h
+	sed -i "/CFLAGS/s|\${CPPFLAGS}|& $CFLAGS|g" config.mk
+	sed -i "/LDFLAGS/s|\-s|$LDFLAGS|g" config.mk
+	make CC=$CC INCS="-I. -I${XBPS_CROSS_BASE}/usr/include/freetype2" LIBS="-lX11 -lXinerama -lXft -lfontconfig"
+}
+#
+# FILESDIR Full path to the files package directory, i.e srcpkgs/foo/files.
+# 	The files directory can be used to store additional files to be installed as part of the source package.
+# https://github.com/alexxlabs/void-packages/blob/master/Manual.md#global-functions
+#
+do_install() {
+	make PREFIX=/usr DESTDIR=$DESTDIR install
+	vinstall ${wrksrc}/fonts/* 644 ~/.local/share/fonts
+	vinstall ${FILESDIR}/dwm.desktop 644 usr/share/xsessions
+	vlicense LICENSE
+}
