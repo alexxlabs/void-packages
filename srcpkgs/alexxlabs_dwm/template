@@ -23,7 +23,7 @@ wrksrc="dwm-${version}"
 create_wrksrc=yes
 #
 # A directory relative to ${wrksrc} that will be used when building the package.
-#build_wrksrc="build"
+build_wrksrc="dwm-${version}"
 #
 distfiles="
 	https://dl.suckless.org/dwm/dwm-${version}.tar.gz
@@ -31,7 +31,8 @@ distfiles="
 #
 #  A list of filenames that should not be extracted in the extract phase.
 # This must match the *basename* of any url defined in ${distfiles}.
-skip_extraction="gaplessgrid.c"
+skip_extraction="
+	gaplessgrid.c"
 #
 checksum="
 	badaa028529b1fba1fd7f9a84f3b64f31190466c858011b53e2f7b70c6a3078d
@@ -50,10 +51,12 @@ checksum="
 #do_extract() {
 #
 #}
+#
 # Current working directory for post_extract: wrksrc
-#post_extract() {
-#	# copy gaplessgrid.c to build_dir
-#}
+post_extract() {
+	# copy gaplessgrid.c to build_dir
+	cp ${XBPS_SRCDISTDIR}/${pkgname}-${version}/gaplessgrid.c ${wrksrc}/${build_wrksrc}/
+}
 #
 do_build() {
 	[ -e ${FILESDIR}/config.h ] && cp ${FILESDIR}/config.h config.h
@@ -76,7 +79,11 @@ do_build() {
 #
 do_install() {
 	make PREFIX=/usr DESTDIR=$DESTDIR install
-	vinstall ${wrksrc}/fonts/* 644 ~/.local/share/fonts
+	#
+	# Copies recursively all files in pattern to targetdir in the pkg $DESTDIR.
+	vcopy() vcopy <pattern> <targetdir>
+	vinstall ${FILESDIR}/fonts/* 644 ~/.local/share/fonts
+	#
 	vinstall ${FILESDIR}/dwm.desktop 644 usr/share/xsessions
 	vlicense LICENSE
 }
