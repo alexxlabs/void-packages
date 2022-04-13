@@ -6,7 +6,7 @@
 interval=0
 
 # load colors
-. ~/.config/chadwm/scripts/bar_themes/nord
+source /etc/X11/xinit/scripts/bar_themes/nord
 
 cpu() {
   cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)

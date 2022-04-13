@@ -1,0 +1,49 @@
+# Template file for 'eww'
+pkgname=alexxlabs_eww
+version=20220413
+revision=1
+build_style=cargo
+hostmakedepends="pkg-config"
+#
+# eww requires some dynamic libraries to be available on your system.
+# The exact names of the packages that provide these may differ depending on your distribution.
+# VoidLinux Packages list:
+# - gtk+3-devel
+# ??? gtk-layer-shell (only on Wayland)
+# - pango-devel
+# - gdk-pixbuf-devel
+# - cairo-devel
+# - glib-devel
+# - libgcc-devel
+# - glibc-devel
+# (Note that you will most likely need the -devel variants of your distro's packages to be able to compile eww.)
+makedepends="gtk+3-devel pango-devel gdk-pixbuf-devel cairo-devel glib-devel libgcc-devel glibc-devel git"
+#
+short_desc="ElKowars wacky widgets written in rust"
+maintainer="alexxlabs <alexander.kalin@gmail.com>"
+license="MIT"
+homepage="https://github.com/elkowar/eww.git"
+changelog="https://github.com/elkowar/eww/raw/master/CHANGELOG.md"
+
+#distfiles="https://github.com/xxx/archive/v${version}.tar.gz"
+#checksum=xxxxxx
+#
+# if defined and distfiles is not set, use it to extract the required sources.
+# Current working directory for do_extract: wrksrc
+do_extract() {
+	git clone https://github.com/elkowar/eww
+}
+#
+
+
+case "$XBPS_TARGET_MACHINE" in
+	x86_64*|i686*|arm*|aarch64*) ;;
+	*) broken="ftbfs in ring" ;;
+esac
+
+pre_build() {
+	export PKG_CONFIG_ALL_DYNAMIC=1
+	export RUSTONIG_SYSTEM_LIBONIG=1
+}
+
+#post_install() {}

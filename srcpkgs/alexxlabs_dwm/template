@@ -1,11 +1,38 @@
-# Template file for 'alexxlabs_dwm'
+# metapackage for setup fully customized desktop 'alexxlabs_dwm'
+#
+# TODO: for later readme
+## https://maxice8.github.io/7-using-tmplgen/
+# https://maxice8.github.io/11-updating-tmplgen/
+# XBPS_DISTDIR for this util exported from /etc/env
+#xbps-install -y tmplgen
+#
 # inspired by: https://github.com/siduck/chadwm
 #
 pkgname=alexxlabs_dwm
 version=6.3
 revision=1
 #
+# https://github.com/alexxlabs/void-packages/blob/master/Manual.md#about-the-many-types-of-depends-variables
+#
+# The target package can also depend on other packages for libraries to link against or header files.
+# These packages should be listed in makedepends and will match the target architecture,
+# regardless of the architecture of the build machine. Typically,
+# makedepends will contain mainly -devel packages.
 makedepends="libXinerama-devel libXft-devel freetype-devel imlib2-devel"
+#
+# a package may require certain dependencies at runtime, without which it is unusable.
+# These dependencies, when they aren't detected automatically by XBPS, should be listed in:
+# *** we include here all the packages, that we use to customize our desktop ***
+# - xrandr:     Primitive command line interface to RandR extension
+# - xbacklight: Adjust backlight brightness using RandR extension
+# - xmodmap:    утилита для изменения раскладки клавиш клавиатуры и мыши в Xorg
+# - xrdb:       X server resource database utility
+# - dash:       dependencie of opt/void-packages/srcpkgs/alexxlabs_dwm/files/scripts/bar.sh
+# - rofi:       Window switcher, run dialog and dmenu replacement
+# TODO: - rofi-pass - Rofi frontend for pass
+# - alexxlabs_eww: eww widgets for use configs (files/eww)
+depends="xrandr xbacklight xmodmap xrdb dash rofi alexxlabs_eww"
+#
 #
 short_desc="Dynamic window manager for X"
 maintainer="siduck <siduck@tutanota.com>"
@@ -23,21 +50,22 @@ wrksrc="dwm-${version}"
 create_wrksrc=yes
 #
 # A directory relative to ${wrksrc} that will be used when building the package.
-build_wrksrc="dwm-${version}"
+#build_wrksrc="dwm-${version}"
 #
-distfiles="
-	https://dl.suckless.org/dwm/dwm-${version}.tar.gz
-	https://dwm.suckless.org/patches/gaplessgrid/gaplessgrid.c"
+#distfiles="
+#	https://dl.suckless.org/dwm/dwm-${version}.tar.gz
+#	https://dwm.suckless.org/patches/gaplessgrid/gaplessgrid.c"
 #
 #  A list of filenames that should not be extracted in the extract phase.
 # This must match the *basename* of any url defined in ${distfiles}.
-skip_extraction="
-	gaplessgrid.c"
+#skip_extraction="
+#	gaplessgrid.c"
 #
-checksum="
-	badaa028529b1fba1fd7f9a84f3b64f31190466c858011b53e2f7b70c6a3078d
-	0d4aade6b87df8df1af07629143dc5b758af9cf5f93eb6bab68161c74af1ef44"
+#checksum="
+#	badaa028529b1fba1fd7f9a84f3b64f31190466c858011b53e2f7b70c6a3078d
+#	0d4aade6b87df8df1af07629143dc5b758af9cf5f93eb6bab68161c74af1ef44"
 #
+# https://re00.home.blog/2019/07/28/add-patches-to-xbps-packages/
 # Create a folder named patches in the package directory (in the same directory where your template file is).
 # Put your .patch file inside the folder. Now open your template file and include this line after the checksum line:
 #patch_args="-Np1"
@@ -48,44 +76,70 @@ checksum="
 #
 # if defined and distfiles is not set, use it to extract the required sources.
 # Current working directory for do_extract: wrksrc
-#do_extract() {
-#
-#}
-#
-# Current working directory for post_extract: wrksrc
-post_extract() {
-	# copy gaplessgrid.c to build_dir
-	cp ${XBPS_SRCDISTDIR}/${pkgname}-${version}/gaplessgrid.c ${wrksrc}/${build_wrksrc}/
+do_extract() {
+	cp -R ${FILESDIR}/dwm/* ${wrksrc}/
 }
 #
+# Current working directory for post_extract: wrksrc
+#post_extract() {
+#	# copy_to_build_dir
+#	cp -R ${FILESDIR}/dwm/themes ${wrksrc}/${build_wrksrc}/
+#	cp ${FILESDIR}/dwm/fibonacci.c ${wrksrc}/${build_wrksrc}/
+#	cp ${FILESDIR}/dwm/movestack.c ${wrksrc}/${build_wrksrc}/
+#	cp ${FILESDIR}/dwm/transient.c ${wrksrc}/${build_wrksrc}/
+#	cp ${FILESDIR}/dwm/vanitygaps.c ${wrksrc}/${build_wrksrc}/
+#	cp ${FILESDIR}/dwm/functions.h ${wrksrc}/${build_wrksrc}/
+	#
+	# downloaded from distfiles url
+#	cp ${XBPS_SRCDISTDIR}/${pkgname}-${version}/gaplessgrid.c ${wrksrc}/${build_wrksrc}/
+	#
+	# finally, copy config with all customizations
+#	[ -e ${FILESDIR}/dwm/config.def.h ] && cp ${FILESDIR}/dwm/config.def.h ${wrksrc}/${build_wrksrc}/
+#}
+#
 do_build() {
-	[ -e ${FILESDIR}/config.h ] && cp ${FILESDIR}/config.h config.h
 	sed -i "/CFLAGS/s|\${CPPFLAGS}|& $CFLAGS|g" config.mk
 	sed -i "/LDFLAGS/s|\-s|$LDFLAGS|g" config.mk
 	make CC=$CC INCS="-I. -I${XBPS_CROSS_BASE}/usr/include/freetype2" LIBS="-lX11 -lXinerama -lXft -lfontconfig"
 }
 #
-# A list of entries defining directories and permissions to be created at install time.
+# A list of entries defining directories and permissions to be created at *install time*
 # Each entry should be space separated, and will itself contain spaces.
 # User and group and mode are required on every line, even if they are 755 root root.
 # By convention, there is only one entry of dir perms user group per line.
 #make_dirs="
-#	/dir01 0750 user group
-#	/dir02 0750 user group"
+#	/usr/share/fonts    0755 root root
+#	/etc/X11/xinit/scripts 0755 root root"
 #
 # FILESDIR Full path to the files package directory, i.e srcpkgs/foo/files.
 # 	The files directory can be used to store additional files to be installed as part of the source package.
+#
 # https://github.com/alexxlabs/void-packages/blob/master/Manual.md#global-functions
 #
 do_install() {
 	make PREFIX=/usr DESTDIR=$DESTDIR install
+	vinstall ${FILESDIR}/dwm/dwm.desktop 644 usr/share/xsessions
 	#
+	# The system-wide xinitrc is under /etc/X11/xinit/xinitrc.
+	# It can be overridden by ~/.xinitrc
+	vinstall ${FILESDIR}/xinitrc 644 etc/X11/xinit
+	vinstall ${FILESDIR}/.Xresources 644 etc/X11/xinit
+}
+#
+post_install() {
 	# Copies recursively all files in pattern to targetdir in the pkg $DESTDIR.
-	vcopy() vcopy <pattern> <targetdir>
-	vinstall ${FILESDIR}/fonts/* 644 ~/.local/share/fonts
+	# vcopy() vcopy <pattern> <targetdir>
 	#
-	vinstall ${FILESDIR}/dwm.desktop 644 usr/share/xsessions
-	vlicense LICENSE
+	# Creates a directory in the pkg $DESTDIR. The 2nd optional argument sets the mode of the directory.
+	# vmkdir() vmkdir <directory> [<mode>]
+	#
+	vmkdir usr/share/fonts
+	vcopy ${FILESDIR}/fonts/* /usr/share/fonts
+	# to check installed fonts:
+	# fc-list | grep -i "material"|awk -F: '{print $2}' |sort|uniq
+	#
+	vmkdir etc/X11/xinit/scripts
+	vcopy ${FILESDIR}/scripts/* etc/X11/xinit/scripts
 }
 # =================================================================================================
 # ======================================= Subpackages =============================================
