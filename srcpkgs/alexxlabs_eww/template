@@ -85,4 +85,5 @@ pre_build() {
 	export RUSTUP_INIT_SKIP_PATH_CHECK=yes
 	#
 	rustup-init --default-toolchain nightly --profile minimal -y --verbose
+	source /host/cargo/env
 }
