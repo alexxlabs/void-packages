@@ -20,7 +20,7 @@ revision=1
 # makedepends will contain mainly -devel packages.
 makedepends="libXinerama-devel libXft-devel freetype-devel imlib2-devel"
 #
-# a package may require certain dependencies at runtime, without which it is unusable.
+# a package may require certain dependencies *at runtime*, without which it is unusable.
 # These dependencies, when they aren't detected automatically by XBPS, should be listed in:
 # *** we include here all the packages, that we use to customize our desktop ***
 # - xrandr:     Primitive command line interface to RandR extension
@@ -65,20 +65,18 @@ create_wrksrc=yes
 #	badaa028529b1fba1fd7f9a84f3b64f31190466c858011b53e2f7b70c6a3078d
 #	0d4aade6b87df8df1af07629143dc5b758af9cf5f93eb6bab68161c74af1ef44"
 #
-# https://re00.home.blog/2019/07/28/add-patches-to-xbps-packages/
-# Create a folder named patches in the package directory (in the same directory where your template file is).
-# Put your .patch file inside the folder. Now open your template file and include this line after the checksum line:
-#patch_args="-Np1"
-#
 # ---------------------------------------------------------------------------
 # https://github.com/alexxlabs/void-packages/blob/master/Manual.md#functions
 # ---------------------------------------------------------------------------
 #
-# if defined and distfiles is not set, use it to extract the required sources.
-# Current working directory for do_extract: wrksrc
-do_extract() {
+do_fetch() {
+    # mkdir -p ${wrksrc}
+    # cd ${wrksrc}
 	cp -R ${FILESDIR}/dwm/* ${wrksrc}/
 }
+# if defined and distfiles is not set, use it to extract the required sources.
+# Current working directory for do_extract: wrksrc
+#do_extract() {}
 #
 # Current working directory for post_extract: wrksrc
 #post_extract() {
@@ -96,6 +94,11 @@ do_extract() {
 	# finally, copy config with all customizations
 #	[ -e ${FILESDIR}/dwm/config.def.h ] && cp ${FILESDIR}/dwm/config.def.h ${wrksrc}/${build_wrksrc}/
 #}
+#
+# https://re00.home.blog/2019/07/28/add-patches-to-xbps-packages/
+# Create a folder named patches in the package directory (in the same directory where your template file is).
+# Put your .patch file inside the folder. Now open your template file and include this line after the checksum line:
+#patch_args="-Np1"
 #
 do_build() {
 	sed -i "/CFLAGS/s|\${CPPFLAGS}|& $CFLAGS|g" config.mk
