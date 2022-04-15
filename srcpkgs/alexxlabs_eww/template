@@ -1,72 +1,35 @@
 # Template file for 'eww'
-#
-# README: https://maxice8.github.io/4-build-helper-void/
-# README: https://book.qrm.cat/introduction.html
-#
 pkgname=alexxlabs_eww
-version=20220413
-revision=1
-short_desc="ElKowars wacky widgets written in rust"
-maintainer="alexxlabs <alexander.kalin@gmail.com>"
-license="MIT"
-homepage="https://github.com/elkowar/eww.git"
-changelog="https://github.com/elkowar/eww/raw/master/CHANGELOG.md"
+version=0.2
+revision=0
+archs="x86_64"
 #
-# For packages written in rust that use Cargo for building.
-# Configuration arguments (such as --features) can be defined in the variable
-#configure_args="+nightly"
-# and are passed to cargo during do_build.
+# The directory name where the package sources are extracted,
+# by default set to ${pkgname}-${version}. If the top level directory
+# of a package's distfile is different from the default, wrksrc must
+# be set to the *top level directory name inside the archive*.
+wrksrc="eww-${version}.${revision}"
 #
-# https://book.qrm.cat/build-style-scripts.html#build-style-scripts
-build_style=cargo
+hostmakedepends="curl pkg-config glibc-devel libgcc-devel"
 #
-hostmakedepends="pkg-config"
-#
-# eww requires some dynamic libraries to be available on your system.
-# The exact names of the packages that provide these may differ depending on your distribution.
-# VoidLinux Packages list:
-# - gtk+3-devel
+makedepends="gtk+3-devel pango-devel gdk-pixbuf-devel cairo-devel glib-devel rustup"
+#makedepends="gtk+3-devel pango-devel gdk-pixbuf cairo-devel glib-devel atk-devel"
 # - !!! gtk-layer-shell-devel (only on Wayland) !!!
-# - pango-devel
-# - gdk-pixbuf-devel
-# - cairo-devel
-# - glib-devel
-# - libgcc-devel
-# - glibc-devel
-# (Note that you will most likely need the -devel variants of your distro's packages to be able to compile eww.)
 #
-#makedepends="gtk+3-devel pango-devel gdk-pixbuf cairo-devel glib-devel gcc pkg-config atk-devel"
-#makedepends="gtk+3-devel pango-devel gdk-pixbuf cairo-devel glib-devel libgcc-devel glibc-devel git rustup"
+# runtime deps
+depends=""
 #
-# Rather than with your system package manager, I recommend installing rust using rustup,
-# as this makes it easy to use the *nightly toolchain* necessary to build eww.
-makedepends="gtk+3-devel pango-devel gdk-pixbuf cairo-devel glib-devel atk-devel gcc git rustup"
+short_desc="ElKowars wacky widgets"
+maintainer=" <>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/elkowar/eww"
 #
-#distfiles="https://github.com/xxx/archive/v${version}.tar.gz"
-#checksum=xxxxxx
+distfiles="${homepage}/archive/refs/tags/v${version}.${revision}.tar.gz"
+checksum="c384a6c2f611b3b4ffb88a0d5ec14130db53aebae6043d535ace59546a524299"
 #
-# fetch
-# This phase downloads required sources for a source package,
-# as defined by the distfiles variable or do_fetch() function.
-# For do_fetch, post_fetch: surrent working directory: XBPS_BUILDDIR
-do_fetch() {
-    mkdir ${wrksrc}
-    cd ${wrksrc}
-	[[ "x${HTTP_PROXY}" != "x" ]] && git config --system http.proxy ${HTTP_PROXY}
-	git clone https://github.com/elkowar/eww .
-}
+#dir=/usr/bin
+#mode=0755
 #
-# extract
-# This phase extracts the distfiles files into $wrksrc or executes the do_extract() function,
-# which is the directory to be used to compile the source package.
-# if defined and distfiles is not set, use it to extract the required sources.
-#do_extract() {}
-#
-case "$XBPS_TARGET_MACHINE" in
-	x86_64*|i686*|arm*|aarch64*) ;;
-	*) broken="ftbfs in ring" ;;
-esac
-
 pre_build() {
 	# Installing nightly build (because some deps cannot compile with stable version of rust)
 	[[ "x${HTTP_PROXY}" != "x" ]] \
@@ -74,16 +37,30 @@ pre_build() {
 		&& export CARGO_HTTPS_PROXY=${HTTP_PROXY} \
 		&& export http_proxy=${HTTP_PROXY} \
 		&& export https_proxy=${HTTP_PROXY}
-	# warning: it looks like you have an existing installation of Rust at:
-	# warning: /usr/bin
-	# warning: rustup should not be installed alongside Rust. Please uninstall your existing Rust first.
-	# warning: Otherwise you may have confusion unless you are careful with your PATH
-	# warning: If you are sure that you want both rustup and your already installed Rust
-	# warning: then please reply `y' or `yes' or set RUSTUP_INIT_SKIP_PATH_CHECK to yes
-	# warning: or pass `-y' to ignore all ignorable checks.
-	# error: cannot install while Rust is installed
-	export RUSTUP_INIT_SKIP_PATH_CHECK=yes
-	#
+	#export RUSTUP_INIT_SKIP_PATH_CHECK=yes
+    # Installing Rust Nightly Toolchain
 	rustup-init --default-toolchain nightly --profile minimal -y --verbose
-	source /host/cargo/env
+    #curl https://sh.rustup.rs -sSf | sh -s -- --profile minimal --default-toolchain nightly -y # --no-modify-path
+    source ${XBPS_HOSTDIR}/cargo/env
+}
+#
+do_build() {
+    #${XBPS_HOSTDIR}/cargo/bin/
+    cargo +nightly build --release
+    #
+    # NOTE: When you're on Wayland, build with:
+    #cargo build --release --no-default-features --features=wayland
+    # ( requied makedepends+="gtk-layer-shell-devel" )
+}
+#
+do_install() {
+    #echo ${PKGDESTDIR}
+    vbin target/release/eww
+    vinstall target/release/eww 755 /usr/bin/eww
+    vlicense LICENSE
+}
+#
+post_install() {
+    vmkdir etc/X11/eww
+    vcopy ${FILESDIR}/eww/* etc/X11/eww
 }
