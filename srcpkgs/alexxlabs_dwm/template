@@ -31,7 +31,7 @@ makedepends="libXinerama-devel libXft-devel freetype-devel imlib2-devel"
 # - rofi:       Window switcher, run dialog and dmenu replacement
 # TODO: - rofi-pass - Rofi frontend for pass
 # - alexxlabs_eww: eww widgets for use configs (files/eww)
-depends="xrandr xbacklight xmodmap xrdb dash rofi alexxlabs_eww"
+depends="xrandr xbacklight xmodmap xrdb dash rofi alexxlabs_dwm_fonts alexxlabs_eww"
 #
 #
 short_desc="Dynamic window manager for X"
@@ -70,8 +70,8 @@ create_wrksrc=yes
 # ---------------------------------------------------------------------------
 #
 do_fetch() {
-    # mkdir -p ${wrksrc}
-    # cd ${wrksrc}
+    mkdir -p ${wrksrc}
+    cd ${wrksrc}
 	cp -R ${FILESDIR}/dwm/* ${wrksrc}/
 }
 # if defined and distfiles is not set, use it to extract the required sources.
@@ -135,11 +135,6 @@ post_install() {
 	#
 	# Creates a directory in the pkg $DESTDIR. The 2nd optional argument sets the mode of the directory.
 	# vmkdir() vmkdir <directory> [<mode>]
-	#
-	vmkdir usr/share/fonts
-	vcopy ${FILESDIR}/fonts/* /usr/share/fonts
-	# to check installed fonts:
-	# fc-list | grep -i "material"|awk -F: '{print $2}' |sort|uniq
 	#
 	vmkdir etc/X11/xinit/scripts
 	vcopy ${FILESDIR}/scripts/* etc/X11/xinit/scripts

@@ -56,11 +56,11 @@ do_build() {
 do_install() {
     #echo ${PKGDESTDIR}
     vbin target/release/eww
-    vinstall target/release/eww 755 /usr/bin/eww
+    vinstall target/release/eww 755 /usr/bin
     vlicense LICENSE
 }
 #
 post_install() {
-    vmkdir etc/X11/eww
-    vcopy ${FILESDIR}/eww/* etc/X11/eww
+    vmkdir etc/X11/xinit/eww
+    vcopy ${FILESDIR}/eww/* etc/X11/xinit/eww
 }

@@ -1,0 +1,44 @@
+# Template file for 'font-manjari'
+pkgname=alexxlabs_dwm_fonts
+version=1.0
+revision=1
+create_wrksrc=yes
+depends="font-util"
+short_desc="alexxlabs_dwm_fonts"
+maintainer=" <a@mail.com>"
+license="MIT"
+homepage="https://fonts.alexxlabs.com"
+#
+#distfiles="https://${version}.tar.gz"
+#checksum=
+#
+font_dirs="usr/share/fonts/TTF"
+#
+do_install() {
+	# Copies recursively all files in pattern to targetdir in the pkg $DESTDIR.
+	# vcopy() vcopy <pattern> <targetdir>
+	#
+	# Creates a directory in the pkg $DESTDIR. The 2nd optional argument sets the mode of the directory.
+	# vmkdir() vmkdir <directory> [<mode>]
+	#
+	vmkdir ${font_dirs}
+	vmkdir etc/fonts/conf.d
+
+	for f in ${FILESDIR}/fonts/*.{ttf,woff,woff2}; do
+		vinstall $f 0644  ${font_dirs}
+	done
+	# install fontconfig file
+	vinstall ${FILESDIR}/58-alexxlabs_dwm_fonts.conf 0644 usr/share/fontconfig/conf.avail
+}
+
+post_install() {
+	ln -s /usr/share/fontconfig/conf.avail/58-alexxlabs_dwm_fonts.conf "${DESTDIR}/etc/fonts/conf.d/58-alexxlabs_dwm_fonts.conf"
+    #xbps-reconfigure -f fontconfig
+	#
+	# to check installed fonts:
+	# fc-list | grep -i "material"|awk -F: '{print $2}' |sort|uniq
+    #
+    #xset +fp /usr/share/fonts/           # Prepend a custom font path to Xorg's list of known font paths
+    #xset -fp /usr/share/fonts/sucky_fonts/     # Remove the specified font path from Xorg's list of known font paths
+
+}

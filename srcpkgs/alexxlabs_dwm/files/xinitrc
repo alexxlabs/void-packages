@@ -25,11 +25,23 @@ sysresources=/etc/X11/xinit/.Xresources
 # run bar script and dwm ( do not remove this )
 bash /etc/X11/xinit/scripts/bar.sh &
 dwm
+# --------------------------------------------
+# ---------======== NOTE EWW =======----------
+# --------------------------------------------
+# eww is started from dwm config: alexxlabs_dwm/files/dwm/config.def.h
 #
+# To get started, you'll need to create two files: eww.yuck and eww.scss.
+# These files must be placed under $XDG_CONFIG_HOME/eww (this is most likely ~/.config/eww).
+# or:
+# If you want to separate different widgets even further, you can create a new eww config folder anywhere else.
+# Then, you can tell eww to use that configuration directory by passing every command the
+# --config /path/to/your/config/dir flag. Make sure to actually include this in all your eww calls,
+# including eww kill, eww logs, etc. This launches a separate instance of the eww daemon that has separate logs
+# and state from your main eww configuration.
 #
-# ----------------------------------------------------------
-# --------------------- defaults ---------------------------
-# ----------------------------------------------------------
+# --------------------------------------------
+# -------------- defaults --------------------
+# --------------------------------------------
 #userresources=$HOME/.Xresources
 #usermodmap=$HOME/.Xmodmap
 #sysresources=/etc/X11/xinit/.Xresources
