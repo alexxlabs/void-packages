@@ -27,12 +27,14 @@ makedepends="libXinerama-devel libXft-devel freetype-devel imlib2-devel"
 # - xbacklight: Adjust backlight brightness using RandR extension
 # - xmodmap:    утилита для изменения раскладки клавиш клавиатуры и мыши в Xorg
 # - xrdb:       X server resource database utility
+# - xclip:		Command line interface to the X11 clipboard
+# - maim:		Desktop screenshot utility
 # - dash:       dependencie of opt/void-packages/srcpkgs/alexxlabs_dwm/files/scripts/bar.sh
 # - rofi:       Window switcher, run dialog and dmenu replacement
 # TODO: - rofi-pass - Rofi frontend for pass
 # - alexxlabs_eww: eww widgets for use configs (files/eww)
 # - alexxlabs_dwm_fonts: needed fonts, installed as separate package
-depends="xrandr xbacklight xmodmap xrdb dash rofi alexxlabs_dwm_fonts alexxlabs_eww imlib2"
+depends="xrandr xbacklight xmodmap xrdb xclip maim dash rofi alexxlabs_dwm_fonts alexxlabs_eww imlib2"
 #
 #
 short_desc="Dynamic window manager for X"
