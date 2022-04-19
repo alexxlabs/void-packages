@@ -1,18 +1,25 @@
-# Template file for 'font-manjari'
+# Template file for 'alexxlabs_dwm_fonts'
 pkgname=alexxlabs_dwm_fonts
 version=1.0
 revision=1
 create_wrksrc=yes
-depends="font-util"
+#
+# https://github.com/void-linux/void-packages/blob/master/srcpkgs/xbps-triggers/files/x11-fonts
+# This trigger rebuilds the fonts.dir and fonts.scale files for packages that install X11 fonts,
+# and update fontconfig's cache for those fonts.
+depends="font-util xbps-triggers"
 short_desc="alexxlabs_dwm_fonts"
 maintainer=" <a@mail.com>"
 license="MIT"
 homepage="https://fonts.alexxlabs.com"
 #
-#distfiles="https://${version}.tar.gz"
+#distfiles=""
 #checksum=
 #
-font_dirs="usr/share/fonts/TTF"
+# this fonts are needed for custom dwm-eww-rofi theme
+# https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/JetBrainsMono/Ligatures/Regular/complete
+# I downloaded it to files directory and install in systemwide to dir:
+font_dirs="/usr/share/fonts/X11/misc"
 #
 do_install() {
 	# Copies recursively all files in pattern to targetdir in the pkg $DESTDIR.
@@ -21,19 +28,20 @@ do_install() {
 	# Creates a directory in the pkg $DESTDIR. The 2nd optional argument sets the mode of the directory.
 	# vmkdir() vmkdir <directory> [<mode>]
 	#
-	vmkdir ${font_dirs}
+	vmkdir ${font_dirs/\//} # remove leading slash
 	vmkdir etc/fonts/conf.d
 
 	for f in ${FILESDIR}/fonts/*.{ttf,woff,woff2}; do
-		vinstall $f 0644  ${font_dirs}
+		vinstall $f 0644  ${font_dirs/\//} # remove leading slash
 	done
 	# install fontconfig file
 	vinstall ${FILESDIR}/58-alexxlabs_dwm_fonts.conf 0644 usr/share/fontconfig/conf.avail
 }
 
 post_install() {
-	ln -s /usr/share/fontconfig/conf.avail/58-alexxlabs_dwm_fonts.conf "${DESTDIR}/etc/fonts/conf.d/58-alexxlabs_dwm_fonts.conf"
-    #xbps-reconfigure -f fontconfig
+	ln -s /usr/share/fontconfig/conf.avail/58-alexxlabs_dwm_fonts.conf "${DESTDIR}/etc/fonts/conf.d/"
+    # xbps-reconfigure -f fontconfig
+	# fc-cache -r # is the "really force cache reconstruction" switch.
 	#
 	# to check installed fonts:
 	# fc-list | grep -i "material"|awk -F: '{print $2}' |sort|uniq

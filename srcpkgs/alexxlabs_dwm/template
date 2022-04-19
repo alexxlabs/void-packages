@@ -31,7 +31,8 @@ makedepends="libXinerama-devel libXft-devel freetype-devel imlib2-devel"
 # - rofi:       Window switcher, run dialog and dmenu replacement
 # TODO: - rofi-pass - Rofi frontend for pass
 # - alexxlabs_eww: eww widgets for use configs (files/eww)
-depends="xrandr xbacklight xmodmap xrdb dash rofi alexxlabs_dwm_fonts alexxlabs_eww"
+# - alexxlabs_dwm_fonts: needed fonts, installed as separate package
+depends="xrandr xbacklight xmodmap xrdb dash rofi alexxlabs_dwm_fonts alexxlabs_eww imlib2"
 #
 #
 short_desc="Dynamic window manager for X"
@@ -69,6 +70,9 @@ create_wrksrc=yes
 # https://github.com/alexxlabs/void-packages/blob/master/Manual.md#functions
 # ---------------------------------------------------------------------------
 #
+# instead of downloading sources from internet (see distfiles above)
+# copy sources to builddir locally
+# from files/dwm - my custom sources with needed patches
 do_fetch() {
     mkdir -p ${wrksrc}
     cd ${wrksrc}
