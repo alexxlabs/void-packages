@@ -27,6 +27,7 @@ sysresources=/etc/X11/xinit/.Xresources
 #
 # run bar script and dwm ( do not remove this )
 /usr/bin/bash /etc/X11/xinit/scripts/bar.sh &
+#
 dwm
 # --------------------------------------------
 # ---------======== NOTE EWW =======----------
