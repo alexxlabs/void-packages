@@ -31,10 +31,11 @@ makedepends="libXinerama-devel libXft-devel freetype-devel imlib2-devel"
 # - maim:		Desktop screenshot utility
 # - dash:       dependencie of opt/void-packages/srcpkgs/alexxlabs_dwm/files/scripts/bar.sh
 # - rofi:       Window switcher, run dialog and dmenu replacement
+# - xset:		X11 user preferences utility
 # TODO: - rofi-pass - Rofi frontend for pass
 # - alexxlabs_eww: eww widgets for use configs (files/eww)
 # - alexxlabs_dwm_fonts: needed fonts, installed as separate package
-depends="xrandr xbacklight xmodmap xrdb xclip maim dash rofi alexxlabs_dwm_fonts alexxlabs_eww imlib2"
+depends="xrandr xbacklight xmodmap xrdb xclip maim dash rofi xset alexxlabs_dwm_fonts alexxlabs_eww imlib2"
 #
 #
 short_desc="Dynamic window manager for X"
@@ -135,6 +136,8 @@ do_install() {
 	vinstall ${FILESDIR}/.Xresources 644 etc/X11/xinit
 }
 #
+# !!! current working dir:
+# !!! For pre_patch through post_install: build_wrksrc if it is defined, otherwise wrksrc
 post_install() {
 	# Copies recursively all files in pattern to targetdir in the pkg $DESTDIR.
 	# vcopy() vcopy <pattern> <targetdir>
@@ -144,6 +147,7 @@ post_install() {
 	#
 	vmkdir etc/X11/xinit/scripts
 	vcopy ${FILESDIR}/scripts/* etc/X11/xinit/scripts
+	chmod a+x ${DESTDIR}/etc/X11/xinit/scripts/{bar.sh,fetch}
 }
 # =================================================================================================
 # ======================================= Subpackages =============================================

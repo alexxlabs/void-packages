@@ -8,6 +8,20 @@ interval=0
 # load colors
 source /etc/X11/xinit/scripts/bar_themes/nord
 
+#layout(){
+#    # Получаем значение LED для текущей раскладки
+#    # Запустите xset -q | grep LED в терминале, чтобы посмотреть значения для каждой раскладки.
+#    # Значения в этом примере действительны для раскладки us,ru
+#    t=$(xset -q | grep LED)
+#    code=${t##*mask:  }
+#    if [[ $code -eq "00000000" ]]; then
+#            result="EN"
+#    else
+#            result="RU"
+#    fi
+#    echo $result
+#}
+
 cpu() {
   cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)
 
@@ -50,7 +64,7 @@ wlan() {
 }
 
 clock() {
-	printf "^c$black^ ^b$darkblue^ 󱑆 "
+	#printf "^c$black^ ^b$darkblue^ 󱑆 "
 	printf "^c$black^^b$blue^ $(date '+%H:%M')  "
 }
 
@@ -59,5 +73,6 @@ while true; do
   [ $interval = 0 ] || [ $(($interval % 3600)) = 0 ] && updates=$(pkg_updates)
   interval=$((interval + 1))
 
+  # Выводим и обновляем статусбар раз в секунду
   sleep 1 && xsetroot -name "$updates $(battery) $(brightness) $(cpu) $(mem) $(wlan) $(clock)"
 done

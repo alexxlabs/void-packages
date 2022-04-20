@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# !!! NOTE: if we use DisplayManager for login, then we should setup all of this stuff
+# !!! in .xprofile - not xinitrc
+
 # XRandR — расширение X сервера, позволяющее производить настройки режимов работы мониторов.
 # Например, можно изменить разрешение, вывести изображение на внешний монитор,
 # повернуть изображение и тому подобное.
@@ -12,7 +15,7 @@
 xbacklight -set 100 &
 #
 # утилита для изменения раскладки клавиш клавиатуры и мыши в Xorg.
-sysmodmap=/etc/X11/xinit/.Xmodmap
+sysmodmap=/etc/X11/xinit/.Xmodmap # !!! TODO: setup this file [ now it do not exists ]
 [[ -f $sysmodmap ]] && xmodmap $sysmodmap
 #
 # system wide .Xresources for our customized dwm is installed by alexxlabs_dwm package
@@ -23,7 +26,7 @@ sysresources=/etc/X11/xinit/.Xresources
 #xset r rate 200 50 &
 #
 # run bar script and dwm ( do not remove this )
-bash /etc/X11/xinit/scripts/bar.sh &
+/usr/bin/bash /etc/X11/xinit/scripts/bar.sh &
 dwm
 # --------------------------------------------
 # ---------======== NOTE EWW =======----------
