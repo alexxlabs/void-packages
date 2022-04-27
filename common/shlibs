@@ -819,6 +819,7 @@ libchamplain-0.12.so.0 libchamplain-0.12.5_2
 libchamplain-gtk-0.12.so.0 libchamplain-0.12.5_2
 libvpx.so.5 libvpx5-1.7.0_1
 libvpx.so.6 libvpx6-1.8.0_1
+libvpx.so.7 libvpx7-1.11.0_1
 libXevie.so.1 libXevie-1.0.2_1
 libatspi.so.0 at-spi2-core-1.91.91_1
 libatk-bridge-2.0.so.0 at-spi2-atk-2.6.0_1
@@ -2036,6 +2037,8 @@ libQt6Quick3DUtils.so.6 qt6-quick3d-6.0.0_1
 libQt6Quick3DAssetImport.so.6 qt6-quick3d-6.0.0_1
 libQt6Quick3DIblBaker.so.6 qt6-quick3d-6.0.3_1
 libQt6Quick3DParticles.so.6 qt6-quick3d-6.1.0_1
+libQt6Quick3DGlslParser.so.6 qt6-quick3d-6.3.0_1
+libQt6Quick3DAssetUtils.so.6 qt6-quick3d-6.1.0_1
 libQt6QuickControls2Impl.so.6 qt6-declarative-6.0.0_1
 libQt6QuickControls2.so.6 qt6-declarative-6.0.0_1
 libQt6QuickTemplates2.so.6 qt6-declarative-6.0.0_1
@@ -3539,7 +3542,7 @@ libmanette-0.2.so.0 libmanette-0.2.1_1
 libfmt.so.8 fmt-8.0.1_1
 libelementary-calendar.so.0 libio.elementary.calendar-4.2.3_1
 libolm.so.3 olm-3.0.0_1
-libtls.so.22 libtls-3.4.1_1
+libtls.so.25 libtls-3.5.2_1
 libxmlb.so.2 libxmlb-0.2.1_1
 libvoikko.so.1 libvoikko-4.2_1
 libfstrcmp.so.0 libfstrcmp-0.7.D001_1
