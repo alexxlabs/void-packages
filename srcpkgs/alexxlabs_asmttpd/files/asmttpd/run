@@ -6,8 +6,9 @@ exec 2>&1
 # requires libcap package (is installed in runtime packages)
 #
 #setcap CAP_NET_BIND_SERVICE=+eip /usr/local/sbin/asmttpd
-#
-# After doing this, /usr/local/asmttpd
-# will be able to bind to low-numbered ports.
+# After doing this, /usr/local/asmttpd will be able to bind to low-numbered ports.
 # Note that you must use setcap on the binary itself rather than a symlink.
-exec chpst -u root:root /usr/local/sbin/asmttpd /data/htdocs 80
+
+# ${XBPS_DISTDIR} setupped in /etc/env and should be availiable in setupped void VM
+
+exec chpst -u root:root /usr/bin/asmttpd ${XBPS_DISTDIR:-/opt/void-packages}/hostdir/binpkgs 80
