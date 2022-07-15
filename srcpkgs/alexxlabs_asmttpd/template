@@ -1,0 +1,35 @@
+#
+# https://github.com/nemasu/asmttpd/archive/refs/tags/0.4.5.tar.gz
+#
+pkgname=alexxlabs_asmttpd
+version=0.4.5
+revision=1
+makedepends="yasm"
+short_desc="asmttpd webserver"
+maintainer="alexxlabs <alexxlabs@alexxlabs.com>"
+license="MIT"
+homepage="https://github.com/nemasu/asmttpd.git"
+
+distfiles="https://github.com/nemasu/asmttpd/archive/refs/tags/${version}.tar.gz"
+checksum=d947d408ea5d85641bafba8e853bf608342f52480e3157c651fe84e1471a2bd3
+
+# The directory name where the package sources are extracted,
+# by default set to ${pkgname}-${version}. If the top level directory
+# of a package's distfile is different from the default, wrksrc must
+# be set to the *top level directory name inside the archive*.
+wrksrc="asmttpd-${version}"
+
+do_build() {
+    make release
+}
+
+do_install() {
+	# there is no target 'install' in asmttpd Makefile
+    # so, simply copy asmttpd executable to bin dir
+    vbin asmttpd
+}
+
+post_install() {
+    # install service
+	vsv asmttpd
+}
