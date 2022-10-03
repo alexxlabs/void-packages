@@ -2483,7 +2483,7 @@ libi3ipc-glib-1.0.so.0 i3ipc-glib-0.6.0_1
 libcsound64.so.6.0 csound-6.05.0_1
 libcsnd6.so.6.0 csound-6.05.0_1
 libfko.so.3 libfko-2.6.9_1
-libvterm.so.0 libvterm-0.0.20151005_1
+libvterm.so.0 libvterm-0.3_1
 libboinc_opencl.so.7 boinc-7.16.16_2
 libboinc_api.so.7 boinc-7.16.16_2
 libboinc_graphics2.so.7 boinc-7.16.16_2
@@ -2655,7 +2655,7 @@ libcmark.so.0 cmark-0.24.1_1
 libspotify.so.12 libspotify-12.1.51_1
 libvidstab.so.1.1 libvidstab-1.1.0_1
 libxdo.so.3 xdotool-3.20150503.1_1
-libabigail.so.0 libabigail-1.0.rc3_1
+libabigail.so.1 libabigail-2.1_1
 libgnome-games-support-1.so.3 libgnome-games-support-1.4.0_1
 libKDevCMakeCommon.so.36 kdevelop-22.04.1_1
 libKDevClangPrivate.so.36 kdevelop-22.04.1_1
