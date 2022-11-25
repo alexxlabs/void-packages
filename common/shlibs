@@ -146,7 +146,7 @@ libnvidia-gtk2.so.346.47 nvidia-gtklibs-346.47_1 ignore
 libnvidia-gtk3.so.346.47 nvidia-gtklibs-346.47_1 ignore
 libnvidia-glcore.so.390.87 nvidia390-libs-390.87_1 ignore
 libnvidia-glsi.so.346.72 nvidia-libs-346.72_1 ignore
-libnvidia-fatbinaryloader.so.390.154 nvidia390-libs-390.154_1 ignore
+libnvidia-fatbinaryloader.so.390.157 nvidia390-libs-390.154_1 ignore
 libnvidia-fatbinaryloader.so.430.40 nvidia-libs-430.40_1 ignore
 libglapi.so.0 libglapi-7.11_1
 libgbm.so.1 libgbm-9.0_1
@@ -2214,7 +2214,7 @@ librrd.so.8 rrdtool-1.6.0_1
 librrd_th.so.4 rrdtool-1.4.9_1
 libmosquitto.so.1 libmosquitto-1.6.3_5
 libmosquittopp.so.1 libmosquittopp-1.6.3_5
-libmpv.so.1 mpv-0.8.0_2
+libmpv.so.2 mpv-0.35.0_1
 libmbedtls.so.12 mbedtls-2.13.1_1
 libmbedcrypto.so.3 mbedtls-2.9.0_1
 libmbedx509.so.0 mbedtls-2.9.0_1
@@ -2672,21 +2672,22 @@ libvidstab.so.1.1 libvidstab-1.1.0_1
 libxdo.so.3 xdotool-3.20150503.1_1
 libabigail.so.1 libabigail-2.1_1
 libgnome-games-support-1.so.3 libgnome-games-support-1.4.0_1
-libKDevCMakeCommon.so.36 kdevelop-22.04.1_1
-libKDevClangPrivate.so.36 kdevelop-22.04.1_1
-libKDevCompileAnalyzerCommon.so.36 kdevelop-22.04.1_1
-libKDevPlatformDebugger.so.58 kdevelop-22.04.1_1
-libKDevPlatformDocumentation.so.58 kdevelop-22.04.1_1
-libKDevPlatformInterfaces.so.58 kdevelop-22.04.1_1
-libKDevPlatformLanguage.so.58 kdevelop-22.04.1_1
-libKDevPlatformOutputView.so.58 kdevelop-22.04.1_1
-libKDevPlatformProject.so.58 kdevelop-22.04.1_1
-libKDevPlatformSerialization.so.58 kdevelop-22.04.1_1
-libKDevPlatformShell.so.58 kdevelop-22.04.1_1
-libKDevPlatformSublime.so.58 kdevelop-22.04.1_1
-libKDevPlatformTests.so.58 kdevelop-22.04.1_1
-libKDevPlatformUtil.so.58 kdevelop-22.04.1_1
-libKDevPlatformVcs.so.58 kdevelop-22.04.1_1
+libKDevCMakeCommon.so.37 kdevelop-22.08.3_1
+libKDevClangPrivate.so.37 kdevelop-22.08.3_1
+libKDevCompileAnalyzerCommon.so.37 kdevelop-22.08.3_1
+libKDevelopSessionsWatch.so.59 kdevelop-22.08.3_1
+libKDevPlatformDebugger.so.59 kdevelop-22.08.3_1
+libKDevPlatformDocumentation.so.59 kdevelop-22.08.3_1
+libKDevPlatformInterfaces.so.59 kdevelop-22.08.3_1
+libKDevPlatformLanguage.so.59 kdevelop-22.08.3_1
+libKDevPlatformOutputView.so.59 kdevelop-22.08.3_1
+libKDevPlatformProject.so.59 kdevelop-22.08.3_1
+libKDevPlatformSerialization.so.59 kdevelop-22.08.3_1
+libKDevPlatformShell.so.59 kdevelop-22.08.3_1
+libKDevPlatformSublime.so.59 kdevelop-22.08.3_1
+libKDevPlatformTests.so.59 kdevelop-22.08.3_1
+libKDevPlatformUtil.so.59 kdevelop-22.08.3_1
+libKDevPlatformVcs.so.59 kdevelop-22.08.3_1
 libts.so.0 tslib-1.6_1
 libobs.so.0 obs-0.14.1_2
 libobsglad.so.1 obs-28.0.1_1
@@ -4037,7 +4038,7 @@ libwayland-client++.so.0 libwaylandpp-0.2.8_1
 libwayland-cursor++.so.0 libwaylandpp-0.2.8_1
 libwayland-egl++.so.0 libwaylandpp-0.2.8_1
 libwayland-client-extra++.so.0 libwaylandpp-0.2.8_1
-libspdlog.so.1 libspdlog-1.8.2_2
+libspdlog.so.1.11 libspdlog-1.11.0_1
 libmd.so.0 libmd-1.0.3_1
 libldacBT_abr.so.2 ldacBT-2.0.2.3_1
 libldacBT_enc.so.2 ldacBT-2.0.2.3_1
@@ -4200,3 +4201,4 @@ libabsl_strings.so.2206.0.0 abseil-cpp-20220623.1_1
 libabsl_throw_delegate.so.2206.0.0 abseil-cpp-20220623.1_1
 libabsl_time_zone.so.2206.0.0 abseil-cpp-20220623.1_1
 libabsl_spinlock_wait.so.2206.0.0 abseil-cpp-20220623.1_1
+libairspyhf.so.0 libairspyhf-1.6.8_1
