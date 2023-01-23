@@ -425,7 +425,7 @@ libField3D.so.1.7 Field3D-1.7.3_1
 libMAC.so.6 libMAC-5.28_1
 libmad.so.0 libmad-0.15.1b_1
 libmatroska.so.7 libmatroska-1.6.0_1
-libmatrix_client.so.0.8.2 mtxclient-0.8.2_1
+libmatrix_client.so.0.9.1 mtxclient-0.9.1_1
 libebml.so.5 libebml-1.4.0_1
 libdvdread.so.8 libdvdread-6.1.1_1
 libdvdnav.so.4 libdvdnav-4.1.3_1
@@ -3065,7 +3065,7 @@ libwithsctp.so.1 lksctp-tools-1.0.17_1
 libnss_ldap.so.2 nss-pam-ldapd-0.9.7_4
 libunshield.so.0 libunshield-0.6_1
 libMyGUIEngine.so.3.4.1 libmygui-3.4.1_1
-libproj.so.18 proj-6.3.0_1
+libproj.so.25 proj-9.1.1_1
 libnlopt.so.0 nlopt-2.4.2_1
 libeb.so.16 libeb-4.3.3_1
 libchipcard.so.6 libchipcard-5.0.4_1
@@ -3921,7 +3921,7 @@ libhidrd_opt.so.0 hidrd-0.2.0_1
 libhidrd_strm.so.0 hidrd-0.2.0_1
 libhidrd_fmt.so.0 hidrd-0.2.0_1
 libjcat.so.1 libjcat-0.1.2_1
-libmatio.so.9 matio-1.5.17_2
+libmatio.so.11 matio-1.5.23_1
 libportal.so.1 libportal-0.6_1
 libportal-gtk3.so.1 libportal-gtk3-0.6_1
 libportal-gtk4.so.1 libportal-gtk4-0.6_1
@@ -4086,7 +4086,7 @@ libbrial_groebner.so.3 brial-1.2.10_1
 libm4ri-0.0.20200125.so m4ri-20200125_1
 libm4rie-0.0.20200125.so m4rie-20200125_1
 libptytty.so.0 libptytty-2.0_1
-libcoeurl.so.0 coeurl-0.1.0_1
+libcoeurl.so.0.3 coeurl-0.3.0_1
 libKPimPkPass.so.5 kpkpass-21.08.3_1
 libphonenumber.so.8 libphonenumber-8.12.38_1
 libgeocoding.so.8 libphonenumber-8.12.38_1
