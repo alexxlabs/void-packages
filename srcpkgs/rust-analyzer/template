@@ -1,16 +1,16 @@
 # Template file for 'rust-analyzer'
 pkgname=rust-analyzer
-version=2023.03.27
+version=2023.08.07
 revision=1
 _ver=${version//./-}
 build_style=cargo
 make_install_args="--path=crates/rust-analyzer"
 short_desc="Rust compiler front-end for IDEs"
-maintainer="Gabriel Sanches <gabriel@gsr.dev>"
+maintainer="icp <pangolin@vivaldi.net>"
 license="Apache-2.0, MIT"
 homepage="https://rust-analyzer.github.io/"
 distfiles="https://github.com/rust-lang/rust-analyzer/archive/refs/tags/${_ver}.tar.gz"
-checksum=83bab71cc17bde8c286f580d9b9eee091227b77c2d5e73c3a04c8fdc15f2da30
+checksum=2c6ce63d3fa060d7715d2a5306fd7bf237f054663e0f08de34bda8697914295e
 # tests require Rust source code
 make_check=no
 

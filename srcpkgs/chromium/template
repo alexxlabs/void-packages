@@ -1,24 +1,24 @@
 # Template file for 'chromium'
 pkgname=chromium
 # See https://chromiumdash.appspot.com/releases?platform=Linux for the latest version
-version=112.0.5615.49
+version=115.0.5790.98
 revision=1
 archs="i686* x86_64* aarch64* armv7l*"
 hostmakedepends="
  $(vopt_if clang "clang lld llvm15")
- $(vopt_if js_optimize openjdk)
  bison git gperf hwids ninja nodejs perl pkg-config python3
- libatomic-devel libepoxy-devel libevent-devel libglib-devel"
+ libepoxy-devel libevent-devel libglib-devel
+ rust"
 makedepends="
  alsa-lib-devel libdav1d-devel brotli-devel cups-devel elfutils-devel ffmpeg-devel
  fontconfig-devel freetype-devel gtk+3-devel jsoncpp-devel libXScrnSaver-devel
  libXcomposite-devel libXcursor-devel libXdamage-devel libXi-devel libXrandr-devel
- libatomic-devel libavif-devel libcap-devel libcurl-devel libdrm-devel libevent-devel
+ libavif-devel libcap-devel libcurl-devel libdrm-devel libevent-devel
  libexif-devel libflac-devel libgcrypt-devel libjpeg-turbo-devel libmtp-devel
  libpng-devel libva-devel libwebp-devel libxml2-devel libxshmfence-devel
  libxslt-devel woff2-devel minizip-devel mit-krb5-devel nss-devel opus-devel
- pciutils-devel re2-devel snappy-devel speech-dispatcher-devel speex-devel
- xcb-proto zlib-devel libaom-devel libffi-devel
+ pciutils-devel snappy-devel speech-dispatcher-devel speex-devel
+ xcb-proto zlib-devel libaom-devel libffi-devel libevdev-devel
  $(vopt_if pipewire pipewire-devel)
  $(vopt_if pulseaudio pulseaudio-devel)
  $(vopt_if sndio sndio-devel)"
@@ -28,15 +28,14 @@ maintainer="Duncaen <duncaen@voidlinux.org>"
 license="BSD-3-Clause"
 homepage="https://www.chromium.org/"
 distfiles="https://commondatastorage.googleapis.com/chromium-browser-official/${pkgname}-${version}.tar.xz"
-checksum=ddfd37373c1fa0f433a6ac11f0baa2b1f3fdfb9c7b5867e32a4300f2eb5aff41
+checksum=ffbe630ecf8fc8a250be05fdbec6c94d5881b5fcbbc5fb2b93e54ddc78d56af1
 
 lib32disabled=yes
 
-build_options="clang debug js_optimize vaapi pulseaudio sndio pipewire"
+build_options="clang debug vaapi pulseaudio sndio pipewire"
 build_options_default="clang vaapi pulseaudio pipewire"
 desc_option_clang="Use clang to build"
 desc_option_debug="Build with debug symbols"
-desc_option_js_optimize="Optimize the JS used for Chromium's UI"
 desc_option_pipewire="Enable support for screen sharing for WebRTC via PipeWire"
 
 if [ "$XBPS_LIBC" = musl ]; then
@@ -52,8 +51,8 @@ if [ "$CROSS_BUILD" ]; then
 	 libjpeg-turbo-devel libXi-devel nss-devel libpng-devel libwebp-devel
 	 libxml2-devel $(vopt_if pulseaudio pulseaudio-devel) libxslt-devel libxkbcommon-devel
 	 $(vopt_if pipewire pipewire-devel) ffmpeg-devel opus-devel pango-devel libva-devel
-	 libcurl-devel snappy-devel re2-devel libXrandr-devel libXcomposite-devel cups-devel
-	 mit-krb5-devel alsa-lib-devel libXdamage-devel libepoxy-devel
+	 libcurl-devel snappy-devel libXrandr-devel libXcomposite-devel cups-devel
+	 mit-krb5-devel alsa-lib-devel libXdamage-devel libepoxy-devel libevdev-devel
 	 libavif-devel libaom-devel jsoncpp-devel woff2-devel libdav1d-devel libflac-devel"
 fi
 
@@ -132,7 +131,7 @@ do_configure() {
 	# compile gn early, so it can be used to generate gni stuff
 	AR="ar" CC=$CC_FOR_BUILD CXX=$CXX_FOR_BUILD LD=$CXX_FOR_BUILD \
 		CFLAGS=$CFLAGS_FOR_BUILD CXXFLAGS=$CXXFLAGS_FOR_BUILD LDFLAGS=$LDFLAGS_FOR_BUILD \
-		tools/gn/bootstrap/bootstrap.py --skip-generate-buildfiles
+		tools/gn/bootstrap/bootstrap.py ${makejobs} --skip-generate-buildfiles
 
 	# Use system-provided libraries.
 	# TODO: use_system_hunspell (upstream changes needed).
@@ -158,7 +157,6 @@ do_configure() {
 		libxml
 		libxslt
 		opus
-		re2
 		snappy
 	"
 
@@ -196,6 +194,9 @@ do_configure() {
 		'use_custom_libcxx=false'
 		'use_gold=false'
 
+		'rust=true'
+		'rust_sysroot_absolute="/usr"'
+
 		# is_debug makes the build a debug build, changes some things.
 		# might be useful for real debugging vs just debug symbols.
 		"is_debug=false"
@@ -218,9 +219,6 @@ do_configure() {
 
 		# deprecated
 		'use_gnome_keyring=false'
-
-		# https://chromium.googlesource.com/chromium/src/+/master/docs/closure_compilation.md
-		"enable_js_type_check=$(vopt_if js_optimize true false)"
 
 		"use_pulseaudio=$(vopt_if pulseaudio true false)"
 		"link_pulseaudio=$(vopt_if pulseaudio true false)"

@@ -1,6 +1,6 @@
 # Template file for 'nickle'
 pkgname=nickle
-version=2.90
+version=2.92
 revision=1
 build_style=gnu-configure
 makedepends="readline-devel"
@@ -9,7 +9,7 @@ maintainer="Leah Neukirchen <leah@vuxu.org>"
 license="MIT"
 homepage="https://nickle.org/"
 distfiles="https://nickle.org/release/${pkgname}-${version}.tar.gz"
-checksum=fbb3811aa0ac4b31e1702ea643dd3a6a617b2516ad6f9cfab76ec2779618e5a4
+checksum=d7ebe2e23806a3690a75c6f380f06fd815dfd92334c6143aed95f7111bf08efe
 
 pre_build() {
 	make CC="$BUILD_CC" CFLAGS="$BUILD_CFLAGS" \

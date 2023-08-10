@@ -1,7 +1,7 @@
 # Template file for 'curl'
 pkgname=curl
-version=7.87.0
-revision=2
+version=8.2.1
+revision=1
 build_style=gnu-configure
 configure_args="ac_cv_sizeof_off_t=8 --enable-threaded-resolver --enable-ipv6
  --enable-websockets --with-random=/dev/urandom
@@ -22,12 +22,12 @@ checkdepends="python3 stunnel nghttp2 impacket"
 short_desc="Client that groks URLs"
 maintainer="Érico Nogueira <ericonr@disroot.org>"
 license="MIT"
-homepage="https://curl.haxx.se"
-changelog="https://curl.haxx.se/changes.html#${version//./_}"
-distfiles="${homepage}/download/${pkgname}-${version}.tar.bz2"
-checksum=5d6e128761b7110946d1276aff6f0f266f2b726f5e619f7e0a057a474155f307
+homepage="https://curl.se"
+changelog="https://curl.se/changes.html"
+distfiles="https://curl.se/download/curl-${version}.tar.gz"
+checksum=f98bdb06c0f52bdd19e63c4a77b5eb19b243bcbbd0f5b002b9f3cba7295a3a42
 build_options="gnutls gssapi ldap rtmp ssh ssl zstd"
-build_options_default="ssh ssl zstd"
+build_options_default="ssl zstd"
 vopt_conflict ssl gnutls
 
 if [ "$CROSS_BUILD" ]; then
@@ -83,13 +83,5 @@ libcurl-devel_package() {
 		vmove "usr/lib/*.a"
 		vmove "usr/lib/*.so"
 		vmove usr/lib/pkgconfig
-	}
-}
-
-chroot-curl_package() {
-	short_desc+=" - for build infra use"
-	repository=bootstrap
-	pkg_install() {
-		vbin $DESTDIR/usr/bin/curl chroot-curl
 	}
 }

@@ -1,6 +1,6 @@
 # Template file for 'poedit'
 pkgname=poedit
-version=3.2.2
+version=3.3.2
 revision=2
 build_style=gnu-configure
 configure_args="--with-wx-config=wx-config-gtk3"
@@ -12,8 +12,9 @@ short_desc="Cross-platform gettext catalogs (.po files) editor"
 maintainer="Eloi Torrents <eloitor@disroot.org>"
 license="MIT"
 homepage="https://www.poedit.net/"
+changelog="https://raw.githubusercontent.com/vslavik/poedit/master/NEWS"
 distfiles="https://github.com/vslavik/poedit/releases/download/v${version}-oss/poedit-${version}.tar.gz"
-checksum=d87c1a80a885fd348a6d031bdc7daaa0aa5bc59922db564bef9c6dc49243cdde
+checksum=e64139dd4beac1b8ea468d351b2b4bdae8ecbc6f4ca5d1ee1c73832036fff097
 
 CPPFLAGS="-DUCHAR_TYPE=uint16_t -Wno-deprecated-copy"
 
@@ -23,7 +24,6 @@ if [ "$CROSS_BUILD" ]; then
 fi
 
 if [ "$XBPS_TARGET_NO_ATOMIC8" ]; then
-	makedepends+=" libatomic-devel"
 	CXXFLAGS+=" -latomic "
 fi
 

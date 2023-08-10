@@ -1,6 +1,6 @@
 # Template file for 'pex'
 pkgname=pex
-version=2.1.131
+version=2.1.140
 revision=1
 build_style=python3-pep517
 hostmakedepends="python3-flit_core python3-Sphinx"
@@ -9,9 +9,9 @@ short_desc="Library & tool for generating .pex (Python EXecutable) files"
 maintainer="icp <pangolin@vivaldi.net>"
 license="Apache-2.0"
 homepage="https://github.com/pantsbuild/pex"
-changelog="https://raw.githubusercontent.com/pantsbuild/pex/main/CHANGES.rst"
+changelog="https://raw.githubusercontent.com/pantsbuild/pex/main/CHANGES.md"
 distfiles="${PYPI_SITE}/p/pex/pex-${version}.tar.gz"
-checksum=786d6089752e41fc5139ed07f19854d2a75ef0b670457cba602893e78999eaae
+checksum=9d260e34d64d79e51cd3ffdc453a88c593766e7fe71ace0fbe6b929ecadbc93c
 
 post_build() {
 	PYTHONPATH="$PWD" make -C docs man

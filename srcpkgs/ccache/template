@@ -1,6 +1,6 @@
 # Template file for 'ccache'
 pkgname=ccache
-version=4.7.4
+version=4.8.2
 revision=1
 build_style=cmake
 configure_args="-DENABLE_TESTING=OFF -DREDIS_STORAGE_BACKEND=OFF
@@ -13,15 +13,11 @@ homepage="https://ccache.dev"
 changelog="https://ccache.dev/releasenotes.html"
 distfiles="https://github.com/ccache/ccache/releases/download/v${version}/ccache-${version}.tar.xz
  https://github.com/ccache/ccache/releases/download/v${version}/ccache-${version}-linux-x86_64.tar.xz"
-checksum="df0c64d15d3efaf0b4f6837dd6b1467e40eeaaa807db25ce79c3a08a46a84e36
- 0b700cc10884f7faf615203241d34eba7ebe0723f38f6aeb77569a556ff37313"
+checksum="3d3fb3f888a5b16c4fa7ee5214cca76348afd6130e8443de5f6f2424f2076a49
+ 0b33f39766fe9db67f40418aed6a5b3d7b2f4f7fab025a8213264b77a2d0e1b1"
 
 if [ -n "$XBPS_CHECK_PKGS" ]; then
 	configure_args+=" -DENABLE_TESTING=ON"
-fi
-
-if [ "$XBPS_TARGET_NO_ATOMIC8" ]; then
-	makedepends+=" libatomic-devel"
 fi
 
 post_extract() {

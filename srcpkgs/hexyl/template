@@ -1,6 +1,6 @@
 # Template file for 'hexyl'
 pkgname=hexyl
-version=0.12.0
+version=0.13.1
 revision=1
 build_style=cargo
 short_desc="Command-line hex viewer"
@@ -9,7 +9,7 @@ license="Apache-2.0, MIT"
 homepage="https://github.com/sharkdp/hexyl"
 changelog="https://raw.githubusercontent.com/sharkdp/hexyl/master/CHANGELOG.md"
 distfiles="https://github.com/sharkdp/hexyl/archive/v${version}.tar.gz"
-checksum=bf3a3e8851e7bbcf01f75ae95c018faf3c9f1b7f363159d4a7459bbe11478144
+checksum=a4b3009aa7210f7d80f91d6b01543d1544586c4509247f01e028f1a56781056d
 
 post_install() {
 	vlicense LICENSE-MIT

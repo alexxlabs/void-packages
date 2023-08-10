@@ -1,9 +1,9 @@
 # Template file for 'nextcloud-client'
 pkgname=nextcloud-client
-version=3.8.0
+version=3.9.2
 revision=1
 build_style=cmake
-configure_args="-Wno-dev"
+configure_args="-DBUILD_UPDATER=NO -Wno-dev"
 hostmakedepends="pkg-config inkscape"
 makedepends="qt5-tools-devel qt5-declarative-devel qt5-webchannel-devel
  qt5-location-devel qtkeychain-qt5-devel sqlite-devel libcloudproviders-devel
@@ -14,12 +14,12 @@ depends="qt5-graphicaleffects"
 checkdepends="cmocka-devel"
 conf_files="/etc/Nextcloud/sync-exclude.lst"
 short_desc="NextCloud Desktop client"
-maintainer="yopito <pierre.bourgin@free.fr>"
+maintainer="Rodrigo Oliveira <mdkcore@qtrnn.io>"
 license="GPL-2.0-or-later"
 homepage="https://nextcloud.com/clients/"
 changelog="https://github.com/nextcloud/desktop/releases"
 distfiles="https://github.com/nextcloud/desktop/archive/v${version}.tar.gz"
-checksum=612a604522693082ce30405655430079122b76ac74c277dfbb3e5a62a23953f4
+checksum=22adf067fe2f25b984bbd073c4aa2183618d79dbbcf29051691ce46c75c48f6e
 # https://github.com/void-linux/void-packages/pull/33358#discussion_r724518549
 make_check=ci-skip
 

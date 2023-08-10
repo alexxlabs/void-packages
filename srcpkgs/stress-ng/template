@@ -1,6 +1,6 @@
 # Template file for 'stress-ng'
 pkgname=stress-ng
-version=0.15.06
+version=0.16.02
 revision=1
 build_style=gnu-makefile
 make_use_env=1
@@ -9,4 +9,13 @@ maintainer="Leah Neukirchen <leah@vuxu.org>"
 license="GPL-2.0-or-later"
 homepage="https://github.com/ColinIanKing/stress-ng/"
 distfiles="https://github.com/ColinIanKing/stress-ng/archive/refs/tags/V${version}.tar.gz"
-checksum=c38cefcf0a83f6c65aed7c36e57a9a1ee8373418ef71cf089a75b0661dcd4623
+checksum=71ac375826cc58dcbcf5f1609959ed1a5afd71192c52025b5cb273baa3df2317
+
+pre_build() {
+	export HOST_CC="$CC_FOR_BUILD"
+}
+
+if [ "$XBPS_TARGET_LIBC" = "musl" ]; then
+	makedepends+=" musl-legacy-compat"
+fi
+

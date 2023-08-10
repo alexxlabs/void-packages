@@ -3,15 +3,16 @@
 # THIS PKG MUST BE SYNCHRONIZED WITH "srcpkgs/firefox-i18n".
 #
 pkgname=firefox
-version=112.0
+version=116.0
 revision=1
 build_helper="rust"
 short_desc="Mozilla Firefox web browser"
 maintainer="Duncaen <duncaen@voidlinux.org>"
 license="MPL-2.0, GPL-2.0-or-later, LGPL-2.1-or-later"
 homepage="https://www.mozilla.org/firefox/"
-distfiles="${MOZILLA_SITE}/${pkgname}/releases/${version}/source/${pkgname}-${version}.source.tar.xz"
-checksum=eb19185f7bfa5c3b0c73edaa57160b44bf3bb2139db83539809607486b8075d9
+# distfiles="${MOZILLA_SITE}/firefox/candidates/${version/beta/b}-candidates/build1/source/firefox-${version/beta/b}.source.tar.xz"
+distfiles="${MOZILLA_SITE}/firefox/releases/${version}/source/firefox-${version}.source.tar.xz"
+checksum=215d076945bf744327a252f498227ab68e9ba4e3b703e058683d9e4ab92cba76
 
 lib32disabled=yes
 
@@ -20,7 +21,7 @@ hostmakedepends="autoconf213 unzip zip pkg-config perl python3 yasm rust cargo
 makedepends="nss-devel libjpeg-turbo-devel gtk+3-devel icu-devel
  pixman-devel libevent-devel libnotify-devel libvpx-devel libwebp-devel
  libXrender-devel libXcomposite-devel libSM-devel libXt-devel rust-std
- libXdamage-devel freetype-devel libatomic-devel
+ libXdamage-devel freetype-devel
  $(vopt_if alsa alsa-lib-devel) $(vopt_if dbus dbus-glib-devel)
  $(vopt_if pulseaudio pulseaudio-devel) $(vopt_if xscreensaver libXScrnSaver-devel)
  $(vopt_if sndio sndio-devel) $(vopt_if jack jack-devel)"
